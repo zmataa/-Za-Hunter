@@ -26,6 +26,9 @@ struct ContentView: View {
             ForEach(places) { place in
                 
                 Annotation(place.mapItem.name!, coordinate: place.mapItem.placemark.coordinate) {
+                    NavigationLink(destination: LocationDetailsView(mapItem: place.mapItem)) {
+                        Image("Pizza")
+                    }
                     Image("pizza")
                 }
                 
