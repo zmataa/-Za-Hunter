@@ -11,28 +11,29 @@ import MapKit
 struct ContentView: View {
     @StateObject var locationManager = LocationManager()
     @State private var startPosition = MapCameraPosition.userLocation(
-        fallback: .automatic
-    )
+        fallback: .automatic)
     @State private var places = [Place]()
     @State private var mapRegion = MKCoordinateRegion()
     
     
     var body: some View {
-        
-        Map(position: $startPosition) {
-            
-            UserAnnotation()
-            
-            ForEach(places) { place in
+        NavigationView {
+            Map(position: $startPosition) {
                 
-                Annotation(place.mapItem.name!, coordinate: place.mapItem.placemark.coordinate) {
-                    NavigationLink(destination: LocationDetailsView(mapItem: place.mapItem)) {
-                        Image("Pizza")
+                UserAnnotation()
+                
+                ForEach(places) { place in
+                    
+                    Annotation(place.mapItem.name!, coordinate: place.mapItem.placemark.coordinate) {
+                        NavigationLink(destination: LocationDetailsView(mapItem: place.mapItem)) {
+                            Image("pizza")
+                        }
                     }
-                    Image("pizza")
                 }
-                
             }
+            .navigationBarTitle("'Za Hunter", displayMode : .inline)
+            
+            .toolbarBackground(.hidden, for: .navigationBar)
         }
         .onMapCameraChange {
             context in
